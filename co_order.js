@@ -43,17 +43,16 @@ window.addEventListener("load", function () {
 });
 
 function calcOrder() {
-      var orderForm = document.forms.orderForm;
       //Calculate the initial cost of the order 
       var mIndex = orderForm.elements.model.selectedIndex;
       var mCost = orderForm.elements.model.options[mIndex].value;
       var qIndex = orderForm.elements.qty.selectedIndex;
-      var quantity = orderForm.elements.qty[qIndex].value;
+      var quantity = orderForm.elements.qty.options[qIndex].value;
       //Initial cost = cost x quantity
       var initialCost = mCost * quantity;
       orderForm.elements.initialCost.value = formatUSACurrency(initialCost);
       //retrieve the cost of the user's protection plan
-      var pCost = document.querySelector('input[name="protection"]:checked').value * quantity;
+      var pCost = document.querySelector('input[name = "protection"]:checked').value * quantity;
       orderForm.elements.protectionCost.value = formatNumber(pCost, 2);
       //calcutlate the order subtotal
       orderForm.elements.subtotal.value = formatNumber(initialCost + pCost, 2);
@@ -65,7 +64,8 @@ function calcOrder() {
       orderForm.elements.totalCost.value = formatUSACurrency(totalCost);
       //store the order details
       orderForm.elements.modelName.value = orderForm.elements.model.options[mIndex].text;
-      orderForm.elements.protectionName.value = document.querySelectorAll('input[name="protection"]:checked').nextSibling.nodeValue
+      orderForm.elements.protectionName.value = document.querySelector('input[name = "protection"]:checked').nextSibling.nodeValue;
+
 }
 
 function formatNumber(val, decimals) {
