@@ -63,3 +63,105 @@ window.addEventListener("load", function () {
 
 
 });
+
+window.addEventListener("load", function () {
+  document.getElementById("subButton").onclick = runSubmit;
+  document.getElementById("cardName").oninput = validateName;
+  document.getElementById("cardNumber").oninput = validateNumber;
+  document.getElementById("expMonth").onchange = validateMonth;
+  document.getElementById("expYear").onchange = validateYear;
+  document.getElementById("cvc").oninput = validateCVC;
+});
+
+function runSubmit() {
+  validateName();
+  validateCredit();
+  validateNumber();
+  validateMonth();
+  validateYear();
+  validateCVC();
+}
+
+function validateCVC() {
+  var cardCVC = document.getElementById("cvc");
+  var creditCard = document.querySelector('input[name="credit"]:checked').value;
+
+  if (cardCVC.validity.valueMissing) {
+    cardCVC.setCustomValidity("Enter Your CVC number");
+  } else if ((creditCard === "amex") && (/^\d{4}$/.test(cardCVC.value) === false)) {
+    cardCVC.setCustomValidity("Enter a 4-digit CVC number");
+  } else if (((creditCard !== "amex") && (/^\d{3}$/.test(cardCVC.value) === false))) {
+    cardCVC.setCustomValidity("Enter a 3-digit CVC number");
+  } else {
+    cardCVC.setCustomValidity("");
+  }
+
+}
+
+function validateCredit() {
+  var creditCard = document.forms.payment.elements.credit[0];
+  if (creditCard.validity.valueMissing) {
+    creditCard.setCustomValidity("Select your credit card");
+  } else {
+    creditCard.setCustomValidity("");
+  }
+}
+
+function validateMonth() {
+  var cardMonth = document.getElementById("expMonth");
+  if (cardMonth.selectedIndex === 0) {
+    cardMonth.setCustomValidity("Select the expiration month");
+  } else {
+    cardMonth.setCustomValidity("");
+  }
+}
+
+function validateYear() {
+  var cardYear = document.getElementById("expYear");
+  if (cardYear.selectedIndex === 0) {
+    cardYear.setCustomValidity("Select the expiration month");
+  } else {
+    cardYear.setCustomValidity("");
+  }
+}
+
+function validateNumber() {
+  var cardNumber = document.getElementById("cardNumber");
+  if (cardNumber.validity.valueMissing) {
+    cardNumber.setCustomValidity("Enter your card number");
+  } else if (cardNumber.validity.patternMismatch) {
+    cardNumber.setCustomValidity("Enter a valid card number");
+  } else {
+    cardNumber.setCustomValidity("");
+  }
+}
+
+function validateName() {
+  var cardName = document.getElementById("cardName");
+  if (cardName.validity.valueMissing) {
+    cardName.setCustomValidity("Enter your name as it appears on the card")
+  } else {
+    cardName.setCustomValidity("");
+  }
+}
+
+function sumDigits(numStr) {
+  var digitTotal = 0;
+  for (var i = 0; i < numStr.length; i++) {
+    digitTotal += parseInt(numStr.charAt(i));
+  }
+  return digitTotal;
+}
+
+function luhn(idNum) {
+  var string1 = "";
+  var string2 = "";
+  //retrieve the odd-numbered digits
+  for (var i = idNum.length - 1; i >= 0; i -= 2) {
+    string1 += idNum.charAt(i);
+  }
+  // Retrieve the even-numbered digits and double them 
+
+
+  // Return whether the sum of the digits is divisible by 10
+}
